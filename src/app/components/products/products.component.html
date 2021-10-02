@@ -10,9 +10,19 @@
       <mat-icon matPrefix>search</mat-icon>
     </mat-form-field>
 
+    <mat-form-field appearance="fill">
+      <mat-label>Sort</mat-label>
+      <mat-select [(value)]="sortValue">
+        <mat-option value="name">Name</mat-option>
+        <mat-option value="creationDate">Date</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
-  <div class="products__productForm"></div>
+  <div class="products__productForm">
+    <app-product-creation></app-product-creation>
+  </div>
   <div class="products__productsList">
-    <app-product *ngFor="let product of products$ |async" [product]="product" (editProduct)="editProduct($event,product); false"></app-product>
+    <app-product *ngFor="let product of products$ |sort:sortValue|async" [product]="product"
+      (editProduct)="editProduct($event,product); false"></app-product>
   </div>
 </div>

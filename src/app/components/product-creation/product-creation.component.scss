@@ -1,0 +1,18 @@
+.form {
+  &__container {
+    padding: 2rem;
+    max-width: 50%;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

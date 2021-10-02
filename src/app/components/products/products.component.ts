@@ -27,8 +27,9 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   products$!: Observable<Product[]>;
   @ViewChild('inputSearch') inputSearch!: ElementRef;
   eventSub$!: Subscription;
+  sortValue = "name"
 
-  constructor(private storeService: StoreService) {}
+  constructor(private storeService: StoreService) { }
 
   ngOnInit(): void {
     this.products$ = this.storeService.products$;

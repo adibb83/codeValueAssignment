@@ -6,6 +6,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+
+
 
 const MATERIAL_IMPORTS = [
   CommonModule,
@@ -15,6 +19,8 @@ const MATERIAL_IMPORTS = [
   MatPaginatorModule,
   MatIconModule,
   MatInputModule,
+  MatSelectModule,
+  MatCardModule
 ];
 
 @NgModule({
@@ -22,4 +28,4 @@ const MATERIAL_IMPORTS = [
   imports: MATERIAL_IMPORTS,
   exports: MATERIAL_IMPORTS,
 })
-export class MaterialModule {}
+export class MaterialModule { }

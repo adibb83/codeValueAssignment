@@ -16,7 +16,7 @@ export class StoreService {
   private products = this.stateManager.getDataFromLocal();
   private productsSubject$ = new BehaviorSubject<Product[]>(this.products);
 
-  constructor(private stateManager: StateManagerService) {}
+  constructor(private stateManager: StateManagerService) { }
 
   get products$() {
     return this.productsSubject$.asObservable();
@@ -36,5 +36,8 @@ export class StoreService {
     this.products.splice(index, 0);
   }
 
-  sortList(str: string) {}
+  getMaxId(): number {
+    if (this.products.length === 0) { return 1 }
+    return Math.max.apply(Math, this.products.map((product) => { return product.id; }))
+  }
 }

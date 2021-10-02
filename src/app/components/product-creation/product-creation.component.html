@@ -1,0 +1,45 @@
+<div class="form__container">
+  <mat-card>
+    <form [formGroup]="productForm">
+      <mat-card-title-group>
+        <mat-card-title>{{name.value | uppercase}} Details</mat-card-title>
+        <img mat-card-md-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+      </mat-card-title-group>
+      <mat-card-content class="form__content">
+        <mat-form-field>
+          <input matInput placeholder="Name" formControlName="name">
+          <mat-error *ngIf="name.hasError('required')">
+            Name required
+          </mat-error>
+          <mat-error *ngIf="name.hasError('maxLength')">
+            30 characters max
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Description" formControlName="description">
+          <mat-error *ngIf="description.hasError('maxLength')">
+            200 characters max
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Price" formControlName="price">
+          <mat-icon matSuffix>attach_money</mat-icon>
+          <mat-error *ngIf="price.hasError('required')">
+            Price Required
+          </mat-error>
+          <mat-error *ngIf="price.hasError('min')">
+            min value 1
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+
+      <mat-card-actions class="form__actions">
+        <button mat-flat-button color="warn">Cancel</button>
+        <button mat-flat-button color="accent" type="submit" (click)="save()"
+          [disabled]="productForm.invalid">Save</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

@@ -4,21 +4,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductsComponent } from './components/products/products.component';
 import { ProductComponent } from './components/product/product.component';
-import { ProuductCreationComponent } from './components/product-creation/prouduct-creation.component';
-import { FormsModule } from '@angular/forms';
+import { ProductCreationComponent } from './components/product-creation/product-creation.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material-module/material.module';
+import { SortPipe } from './pipes/sort.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductsComponent,
     ProductComponent,
-    ProuductCreationComponent,
+    ProductCreationComponent,
+    SortPipe,
   ],
   imports: [
     BrowserModule,
-    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
@@ -26,4 +28,4 @@ import { MaterialModule } from './modules/material-module/material.module';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
