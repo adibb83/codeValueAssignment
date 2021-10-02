@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { BehaviorSubject, of, } from 'rxjs';
+
 import { Product } from '../models/product';
 import { StateManagerService } from './state-manager.service';
 
@@ -14,12 +9,11 @@ import { StateManagerService } from './state-manager.service';
 })
 export class StoreService {
   private products = this.stateManager.getDataFromLocal();
-  private productsSubject$ = new BehaviorSubject<Product[]>(this.products);
 
   constructor(private stateManager: StateManagerService) { }
 
   get products$() {
-    return this.productsSubject$.asObservable();
+    return of(this.products);
   }
 
   createNewProduct(product: Product) {
