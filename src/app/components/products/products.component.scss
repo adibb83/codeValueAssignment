@@ -1,0 +1,31 @@
+.products {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr 1fr 10fr;
+  padding: 1rem;
+
+  grid-template-areas:
+    "header header"
+    "filter filter"
+    "list form";
+
+  &__header {
+    grid-area: header;
+  }
+
+  &__filterbar {
+    grid-area: filter;
+    display: flex;
+    flex-direction: row;
+    justify-items: start;
+    align-items: center;
+  }
+
+  &__productForm {
+    grid-area: form;
+  }
+
+  &__productsList {
+    grid-area: list;
+  }
+}

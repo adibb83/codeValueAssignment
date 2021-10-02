@@ -1,0 +1,18 @@
+<div class="products">
+  <div class="products__header">
+    <h1>My Store</h1>
+  </div>
+  <div class="products__filterbar">
+    <button mat-raised-button color="primary">Add+</button>
+    <mat-form-field appearance="fill">
+      <mat-label>Search</mat-label>
+      <input #inputSearch type="search" matInput>
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+
+  </div>
+  <div class="products__productForm"></div>
+  <div class="products__productsList">
+    <app-product *ngFor="let product of products$ |async" [product]="product" (editProduct)="editProduct($event,product); false"></app-product>
+  </div>
+</div>

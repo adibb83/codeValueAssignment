@@ -1,0 +1,39 @@
+.product {
+  &__container {
+    max-height: 100px;
+    position: relative;
+  }
+
+  &__info {
+    max-height: 100%;
+    display: grid;
+    grid-template-columns: minmax(150px, 1fr) 10fr 0.5fr;
+    grid-template-areas: "img name button";
+    gap: 1rem;
+    align-items: center;
+    justify-items: start;
+
+    img {
+      grid-area: img;
+      max-height: 100%;
+      max-width: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    .name {
+      grid-area: name;
+
+      span {
+        overflow: hidden;
+        display: inline-block;
+        text-overflow: ellipsis;
+        white-space: break-spaces;
+      }
+    }
+
+    .del_button {
+      grid-area: button;
+    }
+  }
+}
