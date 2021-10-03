@@ -11,14 +11,14 @@
           <mat-error *ngIf="name.hasError('required')">
             Name required
           </mat-error>
-          <mat-error *ngIf="name.hasError('maxLength')">
+          <mat-error *ngIf="name.hasError('maxlength')">
             30 characters max
           </mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <input matInput placeholder="Description" formControlName="description">
-          <mat-error *ngIf="description.hasError('maxLength')">
+          <mat-error *ngIf="description.hasError('maxlength')">
             200 characters max
           </mat-error>
         </mat-form-field>

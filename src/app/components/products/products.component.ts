@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { fromEvent, Observable, Subscriber, Subscription } from 'rxjs';
+import { fromEvent, Observable, Subscription } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -29,12 +29,13 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('inputSearch') inputSearch!: ElementRef;
   eventSub$!: Subscription;
   showEditor$ = this.storeService.showEditor;
-  sortValue = "name";
-  selectedProduct!: Product | null
+  sortValue = 'name';
+  selectedProduct!: Product | null;
 
   constructor(
     private storeService: StoreService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.getProductsData();
@@ -42,15 +43,15 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // detect if routing option with ID
   getProductsData() {
-    let id = this.route.snapshot.paramMap.get('id')
+    let id = this.route.snapshot.paramMap.get('id');
     if (id !== null && !isNaN(parseInt(id))) {
-      this.products$ = this.storeService.products$.pipe(map((item) => item.filter(f => id !== null && f.id == parseInt(id))));
-    }
-    else {
+      this.products$ = this.storeService.products$.pipe(
+        map((item) => item.filter((f) => id !== null && f.id == parseInt(id)))
+      );
+    } else {
       this.products$ = this.storeService.products$;
     }
   }
-
 
   ngAfterViewInit() {
     this.typeAheadListener();
@@ -69,7 +70,6 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe();
   }
-
 
   // filter list by type ahead string
   filterList(txt: string) {
@@ -90,12 +90,11 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.showEditor$.next(true);
   }
 
-
   // single product list @output event emitter -- detect if enter to edit mode or delete item
   editProduct(event: string, product: Product) {
     if (event === 'delete') {
       this.showEditor$.next(false);
-      this.storeService.deleteProduct(product)
+      this.storeService.deleteProduct(product);
     } else {
       this.selectedProduct = product;
       this.showEditor$.next(true);
