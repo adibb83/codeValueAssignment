@@ -18,7 +18,7 @@ export class ProductCreationComponent implements OnInit {
 
   ngOnInit(): void {
     this.createProductForm();
-    this.product ? this.setFormData() : this.newProduct()
+    if (this.product) { this.setFormData() }
   }
 
   get name() {
@@ -47,35 +47,34 @@ export class ProductCreationComponent implements OnInit {
     this.price.setValue(this.product?.price);
   }
 
-  newProduct() {
-    this.name.setValue('new product');
-    this.price.setValue(1);
-  }
-
 
   save() {
-    this.product ? this.updateProduct() : this.createNewProduct()
+    this.product ? this.updateProduct() : this.createNewProduct();
+    this.storeService.showEditor.next(false);
   }
 
+  cancel() {
+    this.storeService.showEditor.next(false);
+  }
 
   updateProduct() {
     if (this.product) {
       this.product.name = this.name.value;
       this.product.description = this.description.value;
       this.product.price = this.price.value;
-      this.storeService.editProduct(this.product);
+      this.storeService.updateProduct(this.product);
     }
   }
 
   createNewProduct() {
-    const temp: Product = {
+    const newProduct: Product = {
       id: this.storeService.getMaxId() + 1,
       name: this.name.value,
       description: this.description.value,
       price: this.price.value,
       creationDate: new Date
     }
-    this.storeService.createNewProduct(temp);
+    this.storeService.createNewProduct(newProduct);
   }
 
 }

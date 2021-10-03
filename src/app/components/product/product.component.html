@@ -1,12 +1,15 @@
-
 <div class="product__container">
-  <div class="product__info" >
-    <img src="../../../assets/images/adidas.jpg" alt="shoes" (click)="editProduct.emit('edit')">
-    <div class="name" (click)="editProduct.emit('edit')">
-      <h3>{{product.name}}</h3>
+  <div class="product__info" (click)="editProduct.emit('edit')">
+    <img src="../../../assets/images/adidas.jpg" alt="shoes">
+    <div class="name">
+      <h3>{{product.name | titlecase}}</h3>
       <span>{{product.description}}</span>
     </div>
-    <button class="del_button" mat-icon-button (click)="editProduct.emit('delete')" aria-label="Delete icon button with a vertical three dot icon">
+    <div class="price">
+      <h2>{{product.price | currency:'USD': 'symbol' : '1.0-0' }}</h2>
+    </div>
+    <button class="del_button" mat-icon-button (click)="editProduct.emit('delete'); $event.stopPropagation()"
+      aria-label="Delete icon button with a vertical three dot icon">
       <mat-icon>delete_forever</mat-icon>
     </button>
   </div>

@@ -5,22 +5,17 @@ import { Product, ProductsMock } from '../models/product';
   providedIn: 'root',
 })
 export class StateManagerService {
-  public currentState!: Product[];
-  constructor() {
-    this.getDataFromLocal();
-  }
 
   getDataFromLocal(): Product[] {
     const localData = localStorage.getItem('state');
     if (typeof localData === 'string') {
-      this.currentState = <Product[]>JSON.parse(localData);
+      return <Product[]>JSON.parse(localData);
     } else {
-      this.currentState = ProductsMock;
+      return ProductsMock;
     }
-    return this.currentState;
   }
 
-  setDataToLocal(): void {
-    localStorage.setItem('state', JSON.stringify(this.currentState));
+  setDataToLocal(products: Product[]): void {
+    localStorage.setItem('state', JSON.stringify(products));
   }
 }

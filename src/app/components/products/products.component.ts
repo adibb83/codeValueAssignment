@@ -6,6 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { fromEvent, Observable, Subscriber, Subscription } from 'rxjs';
 import {
   debounceTime,
@@ -27,12 +28,23 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   products$!: Observable<Product[]>;
   @ViewChild('inputSearch') inputSearch!: ElementRef;
   eventSub$!: Subscription;
-  sortValue = "name"
+  showEditor$ = this.storeService.showEditor;
+  sortValue = "name";
+  selectedProduct!: Product | null
 
-  constructor(private storeService: StoreService) { }
+  constructor(
+    private storeService: StoreService,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.products$ = this.storeService.products$;
+    let id = this.route.snapshot.paramMap.get('id')
+    if (id !== null && !isNaN(parseInt(id))) {
+      this.products$ = this.storeService.products$.pipe(map((item) => item.filter(f => id !== null && f.id == parseInt(id))));
+    }
+    else {
+      this.products$ = this.storeService.products$;
+    }
+
   }
 
   ngAfterViewInit() {
@@ -43,10 +55,7 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
         distinctUntilChanged(),
         switchMap(async () =>
           this.filterList(this.inputSearch.nativeElement.value)
-        ),
-        tap(() => {
-          console.log(this.inputSearch.nativeElement.value);
-        })
+        )
       )
       .subscribe();
   }
@@ -56,17 +65,27 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
       map((item) =>
         item.filter(
           (f) =>
-            f.name.toLocaleLowerCase().includes(txt) ||
-            f.description.toLocaleLowerCase().includes(txt)
+            f.name.toLocaleLowerCase().includes(txt.toLocaleLowerCase()) ||
+            f.description.toLocaleLowerCase().includes(txt.toLocaleLowerCase())
         )
       )
     );
   }
+
+  addNewProduct() {
+    this.selectedProduct = null;
+    this.showEditor$.next(true);
+  }
+
+
   editProduct(event: string, product: Product) {
-    console.log(event);
-    event === 'delete'
-      ? this.storeService.deleteProduct(product)
-      : this.storeService.editProduct(product);
+    if (event === 'delete') {
+      this.showEditor$.next(false);
+      this.storeService.deleteProduct(product)
+    } else {
+      this.selectedProduct = product;
+      this.showEditor$.next(true);
+    }
   }
 
   ngOnDestroy() {

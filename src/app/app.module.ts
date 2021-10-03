@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material-module/material.module';
 import { SortPipe } from './pipes/sort.pipe';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { SortPipe } from './pipes/sort.pipe';
     BrowserAnimationsModule,
     MaterialModule,
   ],
-  providers: [],
+  providers: [Location, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
