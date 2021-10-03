@@ -41,6 +41,7 @@ export class ProductCreationComponent implements OnInit {
     })
   }
 
+  // on edit existing product set data to form
   setFormData() {
     this.name.setValue(this.product?.name);
     this.description.setValue(this.product?.description);

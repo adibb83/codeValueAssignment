@@ -37,6 +37,11 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.getProductsData();
+  }
+
+  // detect if routing option with ID
+  getProductsData() {
     let id = this.route.snapshot.paramMap.get('id')
     if (id !== null && !isNaN(parseInt(id))) {
       this.products$ = this.storeService.products$.pipe(map((item) => item.filter(f => id !== null && f.id == parseInt(id))));
@@ -44,10 +49,15 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
     else {
       this.products$ = this.storeService.products$;
     }
-
   }
 
+
   ngAfterViewInit() {
+    this.typeAheadListener();
+  }
+
+  // subscribe to input key up search observable
+  typeAheadListener() {
     this.eventSub$ = fromEvent(this.inputSearch.nativeElement, 'keyup')
       .pipe(
         filter(Boolean),
@@ -60,6 +70,8 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe();
   }
 
+
+  // filter list by type ahead string
   filterList(txt: string) {
     this.products$ = this.storeService.products$.pipe(
       map((item) =>
@@ -72,12 +84,14 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
+  // open product editor for new product edit
   addNewProduct() {
     this.selectedProduct = null;
     this.showEditor$.next(true);
   }
 
 
+  // single product list @output event emitter -- detect if enter to edit mode or delete item
   editProduct(event: string, product: Product) {
     if (event === 'delete') {
       this.showEditor$.next(false);

@@ -35,6 +35,7 @@ export class StoreService {
     this.stateManager.setDataToLocal(this.products)
   }
 
+  // get max id from products to set new product id
   getMaxId(): number {
     if (this.products.length === 0) { return 1 }
     return Math.max.apply(Math, this.products.map((product) => { return product.id; }))
